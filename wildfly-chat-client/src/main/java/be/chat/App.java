@@ -4,31 +4,33 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import java.util.Hashtable;
+import java.util.logging.Logger;
 
 /**
  * Hello world!
  */
 public class App {
 
+    private static Logger logger = Logger.getLogger(App.class.getName());
+
     public static void main(String[] args) throws NamingException {
         invokeStatelessBean();
     }
 
     private static void invokeStatelessBean() throws NamingException {
-        // Let's lookup the remote stateless calculator
-        final ChatRemote chat = lookupRemoteStatelessCalculator();
-        System.out.println("Obtained a remote stateless calculator for invocation");
+        final ChatRemote chat = lookupRemoteChat();
+
+        logger.info("Obtained a remote stateless calculator for invocation");
         // invoke on the remote bean
-        chat.sendMessage("Test");
+
+        chat.sendMessage("Dupa");
     }
 
-    private static ChatRemote lookupRemoteStatelessCalculator() throws NamingException {
+    private static ChatRemote lookupRemoteChat() throws NamingException {
         final Hashtable jndiProperties = new Hashtable();
-        jndiProperties.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
-        jndiProperties.put(Context.INITIAL_CONTEXT_FACTORY, "be.chat.App");
-        jndiProperties.put("remote.connectionprovider.create.options.org.xnio.Options.SSL_ENABLED", false);
-        jndiProperties.put("remote.connections", "default");
 
+        jndiProperties.put(Context.INITIAL_CONTEXT_FACTORY, "org.wildfly.naming.client.WildFlyInitialContextFactory");
+        jndiProperties.put(Context.PROVIDER_URL, "http-remoting://localhost:8080");
 
         final Context context = new InitialContext(jndiProperties);
         // The app name is the application name of the deployed EJBs. This is typically the ear name
