@@ -1,0 +1,26 @@
+target
+.classpath
+.project
+.settings
+.idea/
+*.iml
+*.log
+*.~sql
+### macOS ###
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
+### Eclipse ###
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.recommenders
