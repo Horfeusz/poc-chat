@@ -1,13 +1,15 @@
 package be.chat;
 
+import be.chat.dto.MessageDTO;
+
 import javax.ejb.Remote;
 import java.util.List;
 
 @Remote
 public interface ChatRemote {
 
-    void sendMessage(String message);
+    void sendMessageDTO(MessageDTO message);
 
-    List<String> getMessages();
+    List<MessageDTO> getDTOMessages();
 
 }

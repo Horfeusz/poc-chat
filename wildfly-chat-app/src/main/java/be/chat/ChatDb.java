@@ -1,5 +1,9 @@
 package be.chat;
 
+import be.chat.dto.MessageDTO;
+import com.google.common.collect.Lists;
+import lombok.Getter;
+
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import java.util.ArrayList;
@@ -8,18 +12,17 @@ import java.util.List;
 @Singleton
 public class ChatDb {
 
-    private List<String> messages;
+    @Getter
+    private List<MessageDTO> messages;
 
     @PostConstruct
     private void init() {
-        messages = new ArrayList<>();
+        messages = Lists.newArrayList();
     }
-
-    public List<String> getMessages() {
-        return messages;
-    }
-
-    public void addMessage(String message) {
+    
+    public void addMessage(MessageDTO message) {
         messages.add(message);
     }
+
 }
+

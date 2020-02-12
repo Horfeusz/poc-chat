@@ -1,8 +1,11 @@
 package be.chat;
 
+import be.chat.dto.MessageDTO;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import java.time.LocalDateTime;
 import java.util.Hashtable;
 import java.util.logging.Logger;
 
@@ -21,16 +24,20 @@ public class App {
         final ChatRemote chat = lookupRemoteChat();
 
         logger.info("Obtained a remote stateless calculator for invocation");
-        // invoke on the remote bean
 
-        chat.sendMessage("Dupa");
+        // invoke on the remote bean
+        chat.sendMessageDTO(MessageDTO.builder()
+                .owner("App-to-Wildfly")
+                .time(LocalDateTime.now())
+                .message("Wiadmość ze świata")
+                .build());
     }
 
     private static ChatRemote lookupRemoteChat() throws NamingException {
         final Hashtable jndiProperties = new Hashtable();
 
         jndiProperties.put(Context.INITIAL_CONTEXT_FACTORY, "org.wildfly.naming.client.WildFlyInitialContextFactory");
-        jndiProperties.put(Context.PROVIDER_URL, "http-remoting://localhost:8080");
+        jndiProperties.put(Context.PROVIDER_URL, "http-remoting://localhost:8090");
 
         final Context context = new InitialContext(jndiProperties);
         // The app name is the application name of the deployed EJBs. This is typically the ear name
