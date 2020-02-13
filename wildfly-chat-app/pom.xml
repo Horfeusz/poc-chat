@@ -56,7 +56,12 @@
                     <groupId>org.glassfish.main.ejb</groupId>
                     <artifactId>ejb-full-container</artifactId>
                 </exclusion>
-                <!--
+                <exclusion>
+                    <groupId>org.glassfish.metro</groupId>
+                    <artifactId>webservices-osgi</artifactId>
+                </exclusion>
+
+
                 <exclusion>
                     <groupId>org.glassfish.main.jms</groupId>
                     <artifactId>gf-jms-connector</artifactId>
@@ -72,11 +77,6 @@
                 <exclusion>
                     <groupId>org.glassfish.main.persistence</groupId>
                     <artifactId>eclipselink-wrapper</artifactId>
-                </exclusion>
-                -->
-                <exclusion>
-                    <groupId>org.glassfish.metro</groupId>
-                    <artifactId>webservices-osgi</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
