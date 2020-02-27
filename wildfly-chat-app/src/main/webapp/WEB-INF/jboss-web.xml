@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jboss-web>
     <context-root>api/wildfly-chat/v1</context-root>
+    <!--
+    <security-domain>httpFsSD</security-domain>
+    -->
 </jboss-web>

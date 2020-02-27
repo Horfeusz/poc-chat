@@ -36,6 +36,8 @@ public class App {
     private static ChatRemote lookupRemoteChat() throws NamingException {
         final Hashtable jndiProperties = new Hashtable();
 
+        jndiProperties.put(Context.SECURITY_PRINCIPAL, "frank");
+        jndiProperties.put(Context.SECURITY_CREDENTIALS, "password123");
         jndiProperties.put(Context.INITIAL_CONTEXT_FACTORY, "org.wildfly.naming.client.WildFlyInitialContextFactory");
         jndiProperties.put(Context.PROVIDER_URL, "http-remoting://localhost:8090");
 

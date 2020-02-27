@@ -1,6 +1,7 @@
 package be.chat.dto;
 
 import javax.annotation.Resource;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.LocalBean;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
@@ -17,6 +18,7 @@ public class MessageDTOFactory {
     @Resource
     private SessionContext sessionContext;
 
+    @RolesAllowed({"Admin"})
     public MessageDTO create(String message) {
         return MessageDTO.builder()
                 .message(message)
