@@ -28,16 +28,12 @@ public class ChatBean implements ChatRemote {
     @RolesAllowed({"manager"})
     @Override
     public void sendMessageDTO(MessageDTO messageDTO) {
-        logger.info("Called: " + sessionContext.getCallerPrincipal().getName());
-
-        logger.info("Adding message to DB: " + messageDTO);
+        logger.info("Principal name: " + sessionContext.getCallerPrincipal().getName());
         db.addMessage(messageDTO);
     }
 
-    @RolesAllowed({"guest"})
     @Override
     public List<MessageDTO> getDTOMessages() {
-        logger.info("Called: " + sessionContext.getCallerPrincipal().getName());
         return db.getMessages();
     }
 }

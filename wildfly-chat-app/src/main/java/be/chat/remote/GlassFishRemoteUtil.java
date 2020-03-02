@@ -2,8 +2,10 @@ package be.chat.remote;
 
 import be.chat.ChatRemote;
 import com.google.common.base.Throwables;
+import com.sun.enterprise.security.ee.auth.login.ProgrammaticLogin;
 
 import javax.annotation.Resource;
+import javax.annotation.security.PermitAll;
 import javax.ejb.LocalBean;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
@@ -15,16 +17,31 @@ import java.util.logging.Logger;
 
 @Stateless
 @LocalBean
-public class RemoteBeanUtil {
+@PermitAll
+public class GlassFishRemoteUtil {
 
     private static final String REMOTE_HOST = "127.0.0.1";
 
     private static final String REMOTE_PORT = "3700";
 
-    private Logger logger = Logger.getLogger(RemoteBeanUtil.class.getName());
+    private static final String AUTH_CONF_PATH = "C:\\tmp\\auth.conf";
+
+
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     @Resource
     private SessionContext sessionContext;
+
+    private String getCallerPrincipalName() {
+        return Optional.ofNullable(sessionContext)
+                .map(SessionContext::getCallerPrincipal)
+                .map(Principal::getName).orElseThrow(IllegalStateException::new);
+    }
+
+    private String getCallerPrincipalPassword() {
+        //TODO take the Password from ... ???
+        return "password123";
+    }
 
     @SuppressWarnings("unchecked")
     public <T> Optional<T> lookup(Class<T> remoteClass) {
@@ -38,21 +55,17 @@ public class RemoteBeanUtil {
                 "com.sun.corba.ee.impl.presentation.rmi.JNDIStateFactoryImpl");
         props.setProperty("org.omg.CORBA.ORBInitialHost", REMOTE_HOST);
         props.setProperty("org.omg.CORBA.ORBInitialPort", REMOTE_PORT);
-        props.put(Context.SECURITY_PRINCIPAL, Optional.ofNullable(sessionContext)
-                .map(SessionContext::getCallerPrincipal)
-                .map(Principal::getName));
-        props.put(Context.SECURITY_CREDENTIALS, "password123");
 
-        try {
-            final Context context = new InitialContext(props);
-            return Optional.ofNullable(context.lookup(ChatRemote.class.getName()))
-                    .map(o -> {
-                        logger.info("I have remote Object");
-                        return (T) o;
-                    });
-        } catch (NamingException e) {
-            logger.warning("I not found remote bean: " + remoteClass.getName());
-            logger.warning(Throwables.getStackTraceAsString(e));
+        System.setProperty("java.security.auth.login.config", AUTH_CONF_PATH);
+        if (new ProgrammaticLogin().login(getCallerPrincipalName(),
+                getCallerPrincipalPassword().toCharArray())) {
+            try {
+                final Context context = new InitialContext(props);
+                return Optional.ofNullable(context.lookup(ChatRemote.class.getName()))
+                        .map(o -> (T) o);
+            } catch (NamingException e) {
+                logger.warning(Throwables.getStackTraceAsString(e));
+            }
         }
         return Optional.empty();
     }

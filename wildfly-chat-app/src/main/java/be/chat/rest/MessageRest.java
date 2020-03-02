@@ -3,7 +3,7 @@ package be.chat.rest;
 import be.chat.ChatRemote;
 import be.chat.dto.MessageDTO;
 import be.chat.dto.MessageDTOFactory;
-import be.chat.remote.RemoteBeanUtil;
+import be.chat.remote.GlassFishRemoteUtil;
 import org.apache.commons.collections4.CollectionUtils;
 
 import javax.annotation.security.PermitAll;
@@ -17,7 +17,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
-import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -39,7 +38,7 @@ public class MessageRest {
     private ChatRemote chat;
 
     @EJB
-    private RemoteBeanUtil remoteBeanUtil;
+    private GlassFishRemoteUtil glassFishRemoteUtil;
 
     @RolesAllowed("manager")
     @PUT
@@ -53,7 +52,7 @@ public class MessageRest {
                             chat.sendMessageDTO(messageDTO);
 
                             //I try send messages to GlassFish
-                            remoteBeanUtil.lookup(ChatRemote.class)
+                            glassFishRemoteUtil.lookup(ChatRemote.class)
                                     .ifPresent(chatRemote ->
                                             chatRemote.sendMessageDTO(messageDTO));
                         }));
@@ -61,13 +60,8 @@ public class MessageRest {
         return Response.ok().build();
     }
 
-    @RolesAllowed({"guest"})
     @GET
     public List<MessageDTO> getDtoMessages() {
-        logger.info("Called: " + Optional.ofNullable(securityContext)
-                .map(SecurityContext::getUserPrincipal)
-                .map(Principal::getName)
-                .orElse("REST_ANONYMOUSE"));
         return chat.getDTOMessages();
     }
 

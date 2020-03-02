@@ -14,10 +14,13 @@ batch
 
 /subsystem="elytron"/sasl-authentication-factory="fs-application-sasl-authentication":add(mechanism-configurations=[{mechanism-name="JBOSS-LOCAL-USER",realm-mapper="local"},{mechanism-name="DIGEST-MD5",mechanism-realm-configurations=[{realm-name="demoFsRealm"}]}],sasl-server-factory="configured",security-domain="fsSD")
 
+/subsystem=elytron/http-authentication-factory=example-fs-http-auth:add(http-server-mechanism-factory=global,security-domain=fsSD,mechanism-configurations=[{mechanism-name=BASIC,mechanism-realm-configurations=[{realm-name=demoFsRealm}]}])
+
 /subsystem=ejb3/application-security-domain=other:add(security-domain=fsSD)
 
 /subsystem=remoting/http-connector=http-remoting-connector:write-attribute(name=sasl-authentication-factory,value=fs-application-sasl-authentication)
 
+/subsystem=undertow/application-security-domain=other:add(http-authentication-factory=example-fs-http-auth)
 
 run-batch
  
