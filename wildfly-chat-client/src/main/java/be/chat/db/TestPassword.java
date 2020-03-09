@@ -1,5 +1,6 @@
 package be.chat.db;
 
+import org.wildfly.common.iteration.ByteIterator;
 import org.wildfly.security.WildFlyElytronProvider;
 import org.wildfly.security.password.PasswordFactory;
 import org.wildfly.security.password.interfaces.DigestPassword;
@@ -38,6 +39,9 @@ public class TestPassword {
 
         System.out.println(String.format("Password Verified '%b'", passwordFactory.verify(restored, TEST_PASSWORD.toCharArray())));
 
+
+        String maskedPassword = ByteIterator.ofBytes(digest).base64Encode().drainToString();
+        System.out.println(String.format("Masked Password: " + maskedPassword));
 
     }
 }

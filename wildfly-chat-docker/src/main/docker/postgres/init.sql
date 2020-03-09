@@ -2,13 +2,13 @@ create extension pgcrypto;
 
 CREATE TABLE role (
 id   SERIAL PRIMARY KEY,
-name CHAR(50) NOT NULL
+name VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE poc_user (
 id       SERIAL PRIMARY KEY,
-login    CHAR (50) NOT NULL,
-password CHAR (100) NOT NULL
+login    VARCHAR(10) NOT NULL,
+password VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE poc_user_role (
@@ -19,8 +19,8 @@ id_role INTEGER NOT NULL
 INSERT INTO public.role(name) VALUES ('guest');
 INSERT INTO public.role(name) VALUES ('manager');
 
-INSERT INTO public.poc_user(login, password) VALUES ('Rolf', MD5('Rolf123'));
-INSERT INTO public.poc_user(login, password) VALUES ('Hendrik', MD5('Hendrik123'));
+INSERT INTO public.poc_user(login, password) VALUES ('Rolf', 'Rolf123');
+INSERT INTO public.poc_user(login, password) VALUES ('Hendrik', 'Hendrik123');
 
 INSERT INTO public.poc_user_role
 SELECT pu.id, r.id

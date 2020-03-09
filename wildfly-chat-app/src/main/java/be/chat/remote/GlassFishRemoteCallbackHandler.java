@@ -27,7 +27,5 @@ public class GlassFishRemoteCallbackHandler implements CallbackHandler {
                                 ((ObjectCallback) callback).setCredential("password123".toCharArray());
                             }
                         }));
-
-        //new GlassFishRemoteLoginDialog("ejbuser", "password123");
     }
 }

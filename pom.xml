@@ -1,150 +1,127 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-  <groupId>be.chat</groupId>
-  <artifactId>wildfly-chat</artifactId>
-  <packaging>pom</packaging>
-  <version>1.0-SNAPSHOT</version>
-  <modules>
-    <module>wildfly-chat-api</module>
-    <module>wildfly-chat-app</module>
-    <module>wildfly-chat-client</module>
-      <module>wildfly-chat-docker</module>
-  </modules>
+    <groupId>be.chat</groupId>
+    <artifactId>wildfly-chat</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>wildfly-chat-api</module>
+        <module>wildfly-chat-app</module>
+        <module>wildfly-chat-client</module>
+        <module>wildfly-chat-docker</module>
+    </modules>
 
-  <name>wildfly-chat</name>
+    <name>wildfly-chat</name>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
-  </properties>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
 
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.11</version>
-      <scope>test</scope>
-    </dependency>
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            <scope>test</scope>
+        </dependency>
 
-    <!-- https://mvnrepository.com/artifact/javax/javaee-api -->
-    <!--
-    <dependency>
-      <groupId>javax</groupId>
-      <artifactId>javaee-api</artifactId>
-      <version>8.0</version>
-      <scope>provided</scope>
-    </dependency>
-    -->
+        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jsr310 -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>2.10.3</version>
+        </dependency>
 
-    <!-- https://mvnrepository.com/artifact/jakarta.platform/jakarta.jakartaee-api -->
-    <dependency>
-      <groupId>jakarta.platform</groupId>
-      <artifactId>jakarta.jakartaee-api</artifactId>
-      <version>8.0.0</version>
-      <scope>provided</scope>
-    </dependency>
+        <!-- https://mvnrepository.com/artifact/jakarta.platform/jakarta.jakartaee-api -->
+        <dependency>
+            <groupId>jakarta.platform</groupId>
+            <artifactId>jakarta.jakartaee-api</artifactId>
+            <version>8.0.0</version>
+            <scope>provided</scope>
+        </dependency>
 
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.12</version>
+            <scope>provided</scope>
+        </dependency>
 
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <version>1.18.12</version>
-      <scope>provided</scope>
-    </dependency>
+    </dependencies>
 
-  </dependencies>
+    <profiles>
+        <profile>
+            <id>wildfly-remote</id>
+            <properties>
+                <wildfly-id>wildfly-remote</wildfly-id>
+                <wildfly-hostname>localhost</wildfly-hostname>
+                <wildfly-port>9991</wildfly-port>
+                <wildfly-username>admin</wildfly-username>
+                <wildfly-password>admin</wildfly-password>
+            </properties>
+        </profile>
 
-  <profiles>
-    <profile>
-      <id>wildfly-remote</id>
-      <properties>
-        <wildfly-id>wildfly-remote</wildfly-id>
-        <wildfly-hostname>localhost</wildfly-hostname>
-        <wildfly-port>9991</wildfly-port>
-        <wildfly-username>admin</wildfly-username>
-        <wildfly-password>admin</wildfly-password>
-      </properties>
-    </profile>
+        <profile>
+            <id>wildfly-local</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <wildfly-id>wildfly-local</wildfly-id>
+                <wildfly-home>C:/Projekty/DKV/POC/wildfly-17.0.1.Final</wildfly-home>
+                <wildfly-hostname>127.0.0.1</wildfly-hostname>
+                <wildfly-port>9991</wildfly-port>
+                <wildfly-username>admin</wildfly-username>
+                <wildfly-password>admin</wildfly-password>
+            </properties>
+        </profile>
+    </profiles>
 
-    <profile>
-      <id>wildfly-local</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-      <properties>
-        <wildfly-id>wildfly-local</wildfly-id>
-        <wildfly-home>C:/Projekty/DKV/POC/wildfly-17.0.1.Final</wildfly-home>
-        <wildfly-hostname>127.0.0.1</wildfly-hostname>
-        <wildfly-port>9991</wildfly-port>
-        <wildfly-username>admin</wildfly-username>
-        <wildfly-password>admin</wildfly-password>
-      </properties>
-    </profile>
-  </profiles>
+    <build>
+        <pluginManagement>
+            <plugins>
+                <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
+                <plugin>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>3.1.0</version>
+                </plugin>
+                <!-- default lifecycle, jar packaging: see https://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging -->
+                <plugin>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>3.0.2</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.8.0</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.22.1</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.0.2</version>
+                </plugin>
 
-  <build>
-    <pluginManagement>
-      <plugins>
-        <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
-        <plugin>
-          <artifactId>maven-clean-plugin</artifactId>
-          <version>3.1.0</version>
-        </plugin>
-        <!-- default lifecycle, jar packaging: see https://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging -->
-        <plugin>
-          <artifactId>maven-resources-plugin</artifactId>
-          <version>3.0.2</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.8.0</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-surefire-plugin</artifactId>
-          <version>2.22.1</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-jar-plugin</artifactId>
-          <version>3.0.2</version>
-        </plugin>
-
-        <plugin>
-          <groupId>org.wildfly.plugins</groupId>
-          <artifactId>wildfly-maven-plugin</artifactId>
-          <version>1.2.2.Final</version>
-          <configuration>
-            <hostname>127.0.0.1</hostname>
-            <port>9990</port>
-            <username>admin</username>
-            <password>admin</password>
-            <name>wildfly-chat-app-1.0-SNAPSHOT.war</name>
-          </configuration>
-        </plugin>
-
-        <!--
-        <plugin>
-          <artifactId>maven-install-plugin</artifactId>
-          <version>2.5.2</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-deploy-plugin</artifactId>
-          <version>2.8.2</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-site-plugin</artifactId>
-          <version>3.7.1</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-project-info-reports-plugin</artifactId>
-          <version>3.0.0</version>
-        </plugin>
-        -->
-      </plugins>
-    </pluginManagement>
-  </build>
+                <plugin>
+                    <groupId>org.wildfly.plugins</groupId>
+                    <artifactId>wildfly-maven-plugin</artifactId>
+                    <version>1.2.2.Final</version>
+                    <configuration>
+                        <hostname>127.0.0.1</hostname>
+                        <port>9991</port>
+                        <username>admin</username>
+                        <password>admin</password>
+                        <name>wildfly-chat-app-1.0-SNAPSHOT.war</name>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 </project>
