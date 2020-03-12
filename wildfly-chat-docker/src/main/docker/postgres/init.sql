@@ -39,3 +39,8 @@ SELECT pu.id, r.id
   FROM public.poc_user pu, public.role r
 WHERE r.name = 'manager'
   AND pu.login = 'Hendrik';
+
+CREATE VIEW vrole_use as
+SELECT r.name, u.login FROM role r
+  JOIN poc_user_role ur ON ur.id_role = r.id
+  JOIN poc_user u ON u.id = ur.id_poc_user;

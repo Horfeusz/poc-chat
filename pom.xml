@@ -19,8 +19,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
     </properties>
 
     <dependencies>
@@ -66,21 +66,6 @@
                 <wildfly-password>admin</wildfly-password>
             </properties>
         </profile>
-
-        <profile>
-            <id>wildfly-local</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <wildfly-id>wildfly-local</wildfly-id>
-                <wildfly-home>C:/Projekty/DKV/POC/wildfly-17.0.1.Final</wildfly-home>
-                <wildfly-hostname>127.0.0.1</wildfly-hostname>
-                <wildfly-port>9991</wildfly-port>
-                <wildfly-username>admin</wildfly-username>
-                <wildfly-password>admin</wildfly-password>
-            </properties>
-        </profile>
     </profiles>
 
     <build>
@@ -97,8 +82,12 @@
                     <version>3.0.2</version>
                 </plugin>
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.8.0</version>
+                    <configuration>
+                        <release>11</release>
+                    </configuration>
                 </plugin>
                 <plugin>
                     <artifactId>maven-surefire-plugin</artifactId>

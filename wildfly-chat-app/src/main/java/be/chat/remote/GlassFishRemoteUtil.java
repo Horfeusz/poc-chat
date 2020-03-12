@@ -29,7 +29,7 @@ import java.util.logging.Logger;
 @PermitAll
 public class GlassFishRemoteUtil {
 
-    private static final String REMOTE_HOST = "127.0.0.1";
+    private static final String REMOTE_HOST = "ATN0793";
 
     private static final String REMOTE_PORT = "3700";
 
@@ -64,9 +64,10 @@ public class GlassFishRemoteUtil {
         props.setProperty("org.omg.CORBA.ORBInitialHost", REMOTE_HOST);
         props.setProperty("org.omg.CORBA.ORBInitialPort", REMOTE_PORT);
 
-        final ProgrammaticLogin programmaticLogin = new ProgrammaticLogin();
-        boolean authenticated = programmaticLogin.login(getCallerPrincipalName(),
-                getCallerPrincipalPassword());
+        //final ProgrammaticLogin programmaticLogin = new ProgrammaticLogin();
+        //boolean authenticated = programmaticLogin.login(getCallerPrincipalName(),
+        //        getCallerPrincipalPassword());
+        boolean authenticated = true;
         if (authenticated) {
             try {
                 final Context context = new InitialContext(props);
