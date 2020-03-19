@@ -2,12 +2,12 @@ package be.chat.dto;
 
 import javax.annotation.Resource;
 import javax.annotation.security.PermitAll;
-import javax.annotation.security.RolesAllowed;
 import javax.ejb.LocalBean;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import java.security.Principal;
-import java.time.LocalDateTime;
+import java.time.Instant;
+import java.util.Date;
 import java.util.Optional;
 
 @Stateless
@@ -23,7 +23,7 @@ public class MessageDTOFactory {
     public MessageDTO create(String message) {
         return MessageDTO.builder()
                 .message(message)
-                .time(LocalDateTime.now())
+                .time(Date.from(Instant.now()))
                 .owner(Optional.ofNullable(sessionContext)
                         .map(SessionContext::getCallerPrincipal)
                         .map(Principal::getName)

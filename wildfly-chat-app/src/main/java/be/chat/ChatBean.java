@@ -14,7 +14,6 @@ import java.util.logging.Logger;
 
 @Stateless
 @PermitAll
-@SecurityDomain("other")
 public class ChatBean implements ChatRemote {
 
     private Logger logger = Logger.getLogger(getClass().getName());

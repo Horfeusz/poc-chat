@@ -18,9 +18,24 @@
     <name>wildfly-chat</name>
 
     <properties>
+        <!-- 4.0 or 5.0-->
+        <org.glassfish.main.ejb.version>4.0</org.glassfish.main.ejb.version>
+
+        <!-- 4.0.1 or 4.2.1-->
+        <org.glassfish.corba.version>4.0.1</org.glassfish.corba.version>
+
+        <!-- 4.0 or 5.0-->
+        <org.glassfish.main.appclient.version>4.0</org.glassfish.main.appclient.version>
+
+        <!-- 8 or 11 -->
+        <compiler.plugin>8</compiler.plugin>
+
+        <!-- 1.8 or 11 -->
+        <compiler.source>1.8</compiler.source>
+        <compiler.target>1.8</compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>${compiler.source}</maven.compiler.source>
+        <maven.compiler.target>${compiler.target}</maven.compiler.target>
     </properties>
 
     <dependencies>
@@ -86,7 +101,7 @@
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.8.0</version>
                     <configuration>
-                        <release>11</release>
+                        <release>${compiler.plugin}</release>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -104,7 +119,7 @@
                     <version>1.2.2.Final</version>
                     <configuration>
                         <hostname>127.0.0.1</hostname>
-                        <port>9991</port>
+                        <port>9990</port>
                         <username>admin</username>
                         <password>admin</password>
                         <name>wildfly-chat-app-1.0-SNAPSHOT.war</name>

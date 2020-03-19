@@ -2,13 +2,3 @@ database:
   image: poc-postgres-image
   ports:
     - "5432:5432"
-
-wildfly:
-  image: poc-wildfly-image
-  links:
-    - database
-  ports:
-    - "8090:8090"
-    - "9990:9990"
-    - "8787:8787"
-    - "3528:3528"

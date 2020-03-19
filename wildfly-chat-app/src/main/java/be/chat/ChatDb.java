@@ -1,20 +1,19 @@
 package be.chat;
 
 import be.chat.dto.MessageDTO;
-import com.google.common.collect.Lists;
 import lombok.Getter;
-import org.jboss.annotation.security.SecurityDomain;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Singleton;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 
 @Singleton
-@PermitAll
+//@PermitAll
 public class ChatDb {
 
     private Logger logger = Logger.getLogger(getClass().getName());
@@ -24,10 +23,10 @@ public class ChatDb {
 
     @PostConstruct
     private void init() {
-        messages = Lists.newArrayList();
+        messages = new ArrayList<>();
     }
 
-    @RolesAllowed({"manager"})
+    //@RolesAllowed({"manager"})
     public void addMessage(MessageDTO message) {
         Optional.ofNullable(message)
                 .ifPresent(m -> {

@@ -1,15 +1,11 @@
 package be.chat.remote;
 
-import com.google.common.base.Preconditions;
-import com.google.common.base.Throwables;
 import com.sun.enterprise.security.SecurityServicesUtil;
 import com.sun.enterprise.security.UsernamePasswordStore;
 import com.sun.enterprise.security.auth.login.LoginContextDriver;
 import com.sun.enterprise.security.common.Util;
-import com.sun.enterprise.security.ee.auth.login.ProgrammaticLogin;
 
 import javax.annotation.Resource;
-import javax.annotation.security.PermitAll;
 import javax.ejb.LocalBean;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
@@ -18,7 +14,6 @@ import javax.naming.InitialContext;
 import java.security.AccessController;
 import java.security.Principal;
 import java.security.PrivilegedAction;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -26,10 +21,11 @@ import java.util.logging.Logger;
 
 @Stateless
 @LocalBean
-@PermitAll
+//@PermitAll
 public class GlassFishRemoteUtil {
 
-    private static final String REMOTE_HOST = "ATN0793";
+    //private static final String REMOTE_HOST = "192.168.65.209";
+    private static final String REMOTE_HOST = "localhost";
 
     private static final String REMOTE_PORT = "3700";
 
@@ -51,7 +47,6 @@ public class GlassFishRemoteUtil {
 
     @SuppressWarnings("unchecked")
     public <T> Optional<T> lookup(Class<T> remoteClass) {
-        Preconditions.checkArgument(Objects.nonNull(remoteClass));
 
         final Properties props = new Properties();
 
@@ -74,7 +69,7 @@ public class GlassFishRemoteUtil {
                 return Optional.ofNullable(context.lookup(remoteClass.getName()))
                         .map(o -> (T) o);
             } catch (Exception e) {
-                logger.warning(Throwables.getStackTraceAsString(e));
+                e.printStackTrace();
             }
         }
         return Optional.empty();

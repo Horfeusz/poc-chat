@@ -3,7 +3,7 @@ package be.chat.dto;
 import lombok.*;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -16,7 +16,7 @@ public class MessageDTO implements Serializable {
 
     private String owner;
 
-    private LocalDateTime time;
+    private Date time;
 
     private String message;
 }

@@ -5,7 +5,8 @@ import be.chat.dto.MessageDTO;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import java.time.LocalDateTime;
+import java.time.Instant;
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.logging.Logger;
 
@@ -28,7 +29,7 @@ public class App {
         // invoke on the remote bean
         chat.sendMessageDTO(MessageDTO.builder()
                 .owner("App-to-Wildfly")
-                .time(LocalDateTime.now())
+                .time(Date.from(Instant.now()))
                 .message("Wiadmość ze świata")
                 .build());
     }
