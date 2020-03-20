@@ -11,7 +11,7 @@ import javax.ws.rs.ext.Provider;
 import java.text.SimpleDateFormat;
 
 /**
- * Konfiguracja jackona
+ * Jackson configuration
  */
 @Provider
 @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})

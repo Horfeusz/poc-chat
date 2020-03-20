@@ -13,7 +13,7 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 @Singleton
-//@PermitAll
+@PermitAll
 public class ChatDb {
 
     private Logger logger = Logger.getLogger(getClass().getName());
@@ -26,7 +26,7 @@ public class ChatDb {
         messages = new ArrayList<>();
     }
 
-    //@RolesAllowed({"manager"})
+    @RolesAllowed({"manager"})
     public void addMessage(MessageDTO message) {
         Optional.ofNullable(message)
                 .ifPresent(m -> {

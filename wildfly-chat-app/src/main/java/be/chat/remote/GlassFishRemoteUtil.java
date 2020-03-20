@@ -4,8 +4,10 @@ import com.sun.enterprise.security.SecurityServicesUtil;
 import com.sun.enterprise.security.UsernamePasswordStore;
 import com.sun.enterprise.security.auth.login.LoginContextDriver;
 import com.sun.enterprise.security.common.Util;
+import com.sun.enterprise.security.ee.auth.login.ProgrammaticLogin;
 
 import javax.annotation.Resource;
+import javax.annotation.security.PermitAll;
 import javax.ejb.LocalBean;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
@@ -21,7 +23,7 @@ import java.util.logging.Logger;
 
 @Stateless
 @LocalBean
-//@PermitAll
+@PermitAll
 public class GlassFishRemoteUtil {
 
     //private static final String REMOTE_HOST = "192.168.65.209";
@@ -42,7 +44,7 @@ public class GlassFishRemoteUtil {
 
     private char[] getCallerPrincipalPassword() {
         //TODO take the Password from ... ???
-        return "password123".toCharArray();
+        return "Hendrik123".toCharArray();
     }
 
     @SuppressWarnings("unchecked")
@@ -59,10 +61,9 @@ public class GlassFishRemoteUtil {
         props.setProperty("org.omg.CORBA.ORBInitialHost", REMOTE_HOST);
         props.setProperty("org.omg.CORBA.ORBInitialPort", REMOTE_PORT);
 
-        //final ProgrammaticLogin programmaticLogin = new ProgrammaticLogin();
-        //boolean authenticated = programmaticLogin.login(getCallerPrincipalName(),
-        //        getCallerPrincipalPassword());
-        boolean authenticated = true;
+        final ProgrammaticLogin programmaticLogin = new ProgrammaticLogin();
+        boolean authenticated = programmaticLogin.login(getCallerPrincipalName(),
+                getCallerPrincipalPassword());
         if (authenticated) {
             try {
                 final Context context = new InitialContext(props);
@@ -71,6 +72,8 @@ public class GlassFishRemoteUtil {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        } else {
+            logger.warning("Not authenticated !");
         }
         return Optional.empty();
     }

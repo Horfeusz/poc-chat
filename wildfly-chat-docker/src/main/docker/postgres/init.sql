@@ -21,6 +21,7 @@ INSERT INTO public.role(name) VALUES ('manager');
 
 INSERT INTO public.poc_user(login, password) VALUES ('Rolf', 'Rolf123');
 INSERT INTO public.poc_user(login, password) VALUES ('Hendrik', 'Hendrik123');
+INSERT INTO public.poc_user(login, password) VALUES ('Michal', 'Michal123');
 
 INSERT INTO public.poc_user_role
 SELECT pu.id, r.id
@@ -37,8 +38,20 @@ WHERE r.name = 'guest'
 INSERT INTO public.poc_user_role
 SELECT pu.id, r.id
   FROM public.poc_user pu, public.role r
+WHERE r.name = 'guest'
+  AND pu.login = 'Michal';
+
+INSERT INTO public.poc_user_role
+SELECT pu.id, r.id
+  FROM public.poc_user pu, public.role r
 WHERE r.name = 'manager'
   AND pu.login = 'Hendrik';
+
+INSERT INTO public.poc_user_role
+SELECT pu.id, r.id
+  FROM public.poc_user pu, public.role r
+WHERE r.name = 'manager'
+  AND pu.login = 'Michal';
 
 CREATE VIEW vrole_use as
 SELECT r.name, u.login FROM role r
