@@ -4,6 +4,7 @@ import be.chat.ChatRemote;
 import be.chat.dto.MessageDTO;
 import be.chat.dto.MessageDTOFactory;
 import be.chat.remote.GlassFishRemoteUtil;
+import be.chat.remote.RemoteProxy;
 import org.apache.commons.collections4.CollectionUtils;
 
 import javax.annotation.security.PermitAll;
@@ -38,7 +39,7 @@ public class MessageRest {
     private ChatRemote chat;
 
     @EJB
-    private GlassFishRemoteUtil glassFishRemoteUtil;
+    private RemoteProxy remoteProxy;
 
     @RolesAllowed("manager")
     @PUT
@@ -52,7 +53,7 @@ public class MessageRest {
                             chat.sendMessageDTO(messageDTO);
 
                             //I try send messages to GlassFish
-                            glassFishRemoteUtil.lookup(ChatRemote.class)
+                            remoteProxy.lookup(ChatRemote.class)
                                     .ifPresent(chatRemote ->
                                             chatRemote.sendMessageDTO(messageDTO));
                         }));

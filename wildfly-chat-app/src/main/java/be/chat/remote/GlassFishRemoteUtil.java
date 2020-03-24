@@ -21,9 +21,6 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@Stateless
-@LocalBean
-@PermitAll
 public class GlassFishRemoteUtil {
 
     //private static final String REMOTE_HOST = "192.168.65.209";

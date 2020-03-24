@@ -41,6 +41,10 @@
         <extension module="org.wildfly.extension.undertow"/>
         <extension module="org.wildfly.iiop-openjdk"/>
     </extensions>
+    <system-properties>
+        <property name="poc-chat-glassfish-host" value="127.0.0.1"/>
+        <property name="poc-chat-glassfish-port" value="3700"/>
+    </system-properties>
     <management>
         <security-realms>
             <security-realm name="ManagementRealm">
@@ -258,7 +262,7 @@
                 </thread-pool>
             </thread-pools>
             <iiop enable-by-default="false" use-qualified-name="false"/>
-            <default-security-domain value="other"/>
+            <default-security-domain value="PocAppDomain"/>
             <application-security-domains>
                 <application-security-domain name="PocAppDomain" security-domain="PocDomain"/>
             </application-security-domains>
@@ -371,6 +375,15 @@
                         <mechanism mechanism-name="DIGEST-MD5">
                             <mechanism-realm realm-name="ManagementRealm"/>
                         </mechanism>
+                    </mechanism-configuration>
+                </sasl-authentication-factory>
+                <sasl-authentication-factory name="poc-sasl-authentication" sasl-server-factory="configured" security-domain="PocDomain">
+                    <mechanism-configuration>
+                        <mechanism mechanism-name="BASIC">
+                            <mechanism-realm realm-name="PocRealm"/>
+                        </mechanism>
+                        <mechanism mechanism-name="JBOSS-LOCAL-USER" realm-mapper="local"/>
+                        <mechanism mechanism-name="PLAIN"/>
                     </mechanism-configuration>
                 </sasl-authentication-factory>
                 <configurable-sasl-server-factory name="configured" sasl-server-factory="elytron">
@@ -506,7 +519,7 @@
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:pojo:1.0"/>
         <subsystem xmlns="urn:jboss:domain:remoting:4.0">
-            <http-connector name="http-remoting-connector" connector-ref="default" security-realm="ApplicationRealm"/>
+            <http-connector name="http-remoting-connector" connector-ref="default" security-realm="ApplicationRealm" sasl-authentication-factory="poc-sasl-authentication"/>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:request-controller:1.0"/>
         <subsystem xmlns="urn:jboss:domain:resource-adapters:5.0"/>
@@ -623,9 +636,4 @@
             <remote-destination host="localhost" port="25"/>
         </outbound-socket-binding>
     </socket-binding-group>
-    <deployments>
-        <deployment name="wildfly-chat-app-1.0-SNAPSHOT.war" runtime-name="wildfly-chat-app-1.0-SNAPSHOT.war">
-            <fs-archive path="C:\Projekty\DKV\POC\Wildfly\wildfly-chat-app\target\wildfly-chat-app-1.0-SNAPSHOT.war"/>
-        </deployment>
-    </deployments>
 </server>

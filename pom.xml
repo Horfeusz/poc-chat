@@ -13,6 +13,7 @@
         <module>wildfly-chat-app</module>
         <module>wildfly-chat-client</module>
         <module>wildfly-chat-docker</module>
+        <module>wildfly-chat-model</module>
     </modules>
 
     <name>wildfly-chat</name>
@@ -26,9 +27,6 @@
 
         <!-- 4.0 or 5.0-->
         <org.glassfish.main.appclient.version>4.0</org.glassfish.main.appclient.version>
-
-        <!-- 8 or 11 -->
-        <compiler.plugin>8</compiler.plugin>
 
         <!-- 1.8 or 11 -->
         <compiler.source>1.8</compiler.source>
@@ -46,14 +44,12 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jsr310 -->
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
             <version>2.10.3</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/jakarta.platform/jakarta.jakartaee-api -->
         <dependency>
             <groupId>jakarta.platform</groupId>
             <artifactId>jakarta.jakartaee-api</artifactId>
@@ -61,6 +57,18 @@
             <scope>provided</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.1-api</artifactId>
+            <version>1.0.2.Final</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>5.4.12.Final</version>
+        </dependency>
+        
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -100,9 +108,6 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.8.0</version>
-                    <configuration>
-                        <release>${compiler.plugin}</release>
-                    </configuration>
                 </plugin>
                 <plugin>
                     <artifactId>maven-surefire-plugin</artifactId>
