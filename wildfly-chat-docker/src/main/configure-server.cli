@@ -1,0 +1,35 @@
+connect
+ 
+batch
+
+/subsystem=datasources/jdbc-driver=postgresql:add(driver-name=postgresql,driver-module-name=org.postgresql,driver-class-name=org.postgresql.Driver)
+/subsystem=datasources/data-source=PocDS:add(jndi-name=java:/PocDS, driver-name=postgresql, connection-url=jdbc:postgresql://localhost:5432/postgres, user-name=postgres, password=postgres, enabled=true, use-java-context=true)
+
+/subsystem=elytron/jdbc-realm=PocRealm:add(principal-query=[{sql="SELECT hash_password FROM poc_user WHERE login = ?", data-source=PocDS, clear-password-mapper={password-index=1}}, {sql="SELECT r.name FROM role r JOIN poc_user_role ur ON ur.id_role = r.id JOIN poc_user u ON u.id = ur.id_poc_user WHERE u.login = ?", data-source=PocDS, attribute-mapping=[{index=1, to=groups}]}])
+/subsystem=elytron/jdbc-realm=PocHashRealm:add(principal-query=[{sql="SELECT hash_password FROM poc_user WHERE login = ?", data-source=PocDS, simple-digest-mapper={algorithm=simple-digest-sha-256, password-index=1, hash-encoding=hex}}, {sql="SELECT r.name FROM role r JOIN poc_user_role ur ON ur.id_role = r.id JOIN poc_user u ON u.id = ur.id_poc_user WHERE u.login = ?", data-source=PocDS, attribute-mapping=[{index=1, to=groups}]}])
+
+/subsystem=elytron/security-domain="PocDomain":add(default-realm="PocRealm", permission-mapper="default-permission-mapper", realms=[{realm="PocRealm",role-decoder="groups-to-roles"}])
+/subsystem=elytron/security-domain="PocHashDomain":add(default-realm="PocHashRealm", permission-mapper="default-permission-mapper", realms=[{realm="PocHashRealm",role-decoder="groups-to-roles"}])
+
+/subsystem=elytron/http-authentication-factory=Poc-hash-http-authentication:add(http-server-mechanism-factory=global,security-domain=PocHashDomain,mechanism-configurations=[{mechanism-name=BASIC,mechanism-realm-configurations=[{realm-name=PocHashRealm}]}])
+
+/subsystem=elytron/sasl-authentication-factory=poc-sasl-authentication:add(mechanism-configurations=[{mechanism-name="JBOSS-LOCAL-USER",realm-mapper="local"},{mechanism-name="PLAIN"},{mechanism-name="BASIC",mechanism-realm-configurations=[{realm-name="PocRealm"}]}],sasl-server-factory="configured",security-domain=PocHashDomain)
+
+/subsystem=ejb3/application-security-domain=PocAppDomain:add(security-domain=PocDomain)
+/subsystem=ejb3/application-security-domain=PocHashAppDomain:add(security-domain=PocHashDomain)
+
+/subsystem=remoting/http-connector=http-remoting-connector:write-attribute(name=sasl-authentication-factory,value=poc-sasl-authentication)
+
+/subsystem=undertow/application-security-domain=PocHashAppDomain:add(http-authentication-factory=Poc-hash-http-authentication)
+
+/subsystem=security/security-domain=default:add(cache-type=default)
+/subsystem=security/security-domain=default/authentication=classic:add(login-modules=[{code="com.sun.enterprise.security.auth.login.ClientPasswordLoginModule", flag="required"}])
+
+/socket-binding-group=standard-sockets/socket-binding=http/:write-attribute(name=port,value="${jboss.http.port:8090}")
+
+/system-property=poc-chat-glassfish-host:add(value=127.0.0.1)
+/system-property=poc-chat-glassfish-port:add(value=3700)
+
+run-batch
+ 
+reload

@@ -21,6 +21,7 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+@Deprecated
 public class GlassFishRemoteUtil {
 
     //private static final String REMOTE_HOST = "192.168.65.209";
@@ -73,35 +74,6 @@ public class GlassFishRemoteUtil {
             logger.warning("Not authenticated !");
         }
         return Optional.empty();
-    }
-
-
-    @Deprecated
-    private boolean login() {
-        final String user = "ejbuser";
-        final char[] password = "password123".toCharArray();
-        final String realm = "demoFsRealm";
-        Boolean authenticated = false;
-        try {
-            authenticated = AccessController.doPrivileged((PrivilegedAction<Boolean>) () -> {
-                if ((SecurityServicesUtil.getInstance() == null || !SecurityServicesUtil.getInstance().isServer()) && !Util.isEmbeddedServer()) {
-                    int type = 1;
-                    UsernamePasswordStore.set(user, password);
-                    try {
-                        LoginContextDriver.doClientLogin(type, new GlassFishRemoteCallbackHandler());
-                    } finally {
-                        UsernamePasswordStore.resetThreadLocalOnly();
-                    }
-                } else {
-                    LoginContextDriver.login(user, password, realm);
-                }
-                return true;
-            });
-        } catch (Exception var7) {
-            logger.log(Level.SEVERE, "prog.login.failed", var7);
-            authenticated = false;
-        }
-        return authenticated;
     }
 
 }

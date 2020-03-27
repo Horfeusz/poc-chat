@@ -13,7 +13,7 @@ import java.util.*;
 import java.util.logging.Logger;
 
 public class ContextFactory {
-    
+
     private static final String REMOTE_HOST_PROPERTY_NAME = "poc-chat-glassfish-host";
 
     private static final String REMOTE_PORT_PROPERTY_NAME = "poc-chat-glassfish-port";
@@ -34,7 +34,7 @@ public class ContextFactory {
         props.setProperty("org.omg.CORBA.ORBInitialPort", getRemotePort());
         final ProgrammaticLogin programmaticLogin = new ProgrammaticLogin();
         boolean authenticated = programmaticLogin.login(user.getLogin(),
-                Optional.ofNullable(user.getPassword())
+                Optional.ofNullable(user.getHashPassword())
                         .filter(s -> !Strings.isNullOrEmpty(s))
                         .map(String::toCharArray)
                         .orElse("".toCharArray()));

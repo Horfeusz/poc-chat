@@ -20,7 +20,7 @@ RUN mkdir -p /opt/jboss/wildfly/modules/system/layers/base/org/postgresql && \
     mkdir -p /opt/jboss/wildfly/modules/system/layers/base/org/postgresql/main
 ADD postgresql-42.2.10.jar /opt/jboss/wildfly/modules/system/layers/base/org/postgresql/main
 ADD module.xml /opt/jboss/wildfly/modules/system/layers/base/org/postgresql/main
-# ADD standalone.xml /opt/jboss/wildfly/standalone/configuration
+ADD standalone.xml /opt/jboss/wildfly/standalone/configuration
 # ADD standalone.conf.ps1 /opt/jboss/wildfly/bin
 
 ENV LAUNCH_JBOSS_IN_BACKGROUND true
@@ -28,9 +28,8 @@ ENV LAUNCH_JBOSS_IN_BACKGROUND true
 USER jboss
 
 RUN /opt/jboss/wildfly/bin/add-user.sh -u 'admin' -p 'admin'
-RUN /opt/jboss/wildfly/bin/add-user.sh -a -u 'ejbuser' -p 'pasword123'
 
-EXPOSE 8090 9990 8787 3528
+EXPOSE 9990 9993 8009 8090 8443 4712 4713 3528 3529 25 4447 1099 1098
 #EXPOSE 8080 9990 8787 3528
 
 # CMD ["/opt/jboss/wildfly/bin/standalone.sh", "--debug", "-b", "0.0.0.0", "-bmanagement", "0.0.0.0"]

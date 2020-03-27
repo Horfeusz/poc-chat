@@ -1,7 +1,6 @@
 package be.chat;
 
 import be.chat.dto.MessageDTO;
-import org.jboss.annotation.security.SecurityDomain;
 
 import javax.annotation.Resource;
 import javax.annotation.security.PermitAll;

@@ -3,7 +3,6 @@ package be.chat.rest;
 import be.chat.ChatRemote;
 import be.chat.dto.MessageDTO;
 import be.chat.dto.MessageDTOFactory;
-import be.chat.remote.GlassFishRemoteUtil;
 import be.chat.remote.RemoteProxy;
 import org.apache.commons.collections4.CollectionUtils;
 

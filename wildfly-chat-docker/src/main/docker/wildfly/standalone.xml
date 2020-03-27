@@ -166,7 +166,7 @@
                     </security>
                 </datasource>
                 <datasource jndi-name="java:/PocDS" pool-name="PocDS">
-                    <connection-url>jdbc:postgresql://localhost:5432/postgres</connection-url>
+                    <connection-url>jdbc:postgresql://database:5432/postgres</connection-url>
                     <driver-class>org.postgresql.Driver</driver-class>
                     <driver>postgresql</driver>
                     <security>
