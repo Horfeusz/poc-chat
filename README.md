@@ -3,7 +3,7 @@ WildFly and GlassFish remote EJB integration.
 
 ## Introduction
 Here is an example of how to integrate EJB servers: GlassFish 3.1 (Java 1.7) and WildFly 17 (Java 1.8)
-Integration is at the EJB level. This is configuration and application for GlassFish.\
+Integration is at the EJB level. This is configuration and application for WildFly.\
 Source application for [GlassFish]
 
 ## Configuration for WildFly 17
