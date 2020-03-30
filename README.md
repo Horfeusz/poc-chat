@@ -21,7 +21,7 @@ Copy files [postgresql-42.2.10.jar] and [module.xml] to ${WILDFLY_HOME}/modules/
 If the "postgresql" folder does not exist, create it.
 
 ### Use standalone-full configuration:
-I changed file name standalone.xml on standalone-std.xml and I changed file name standalone-full.xml on standalone.xml.
+I changed file name standalone.xml on standalone-std.xml and I changed file name standalone-full.xml on standalone.xml. \
 Your way may be different. 
 
 ### Use CLI to configure the server:
