@@ -31,8 +31,8 @@ jboss-cli.sh -c --controller=127.0.0.1:9990 --user=admin --password=[YOUR ADMIN 
 ```
 
 ### System properties
-poc-chat-glassfish-host: host definition where GlassFish is 
-poc-chat-glassfish-port: port definition where GlassFish is
+**poc-chat-glassfish-host**: host definition where GlassFish is \
+**poc-chat-glassfish-port**: port definition where GlassFish is
 
 [postgresql-42.2.10.jar]: https://jdbc.postgresql.org/download/postgresql-42.2.10.jar
 [module.xml]: https://github.com/Horfeusz/poc-chat/blob/master/wildfly-chat-docker/src/main/docker/wildfly/module.xml
