@@ -25,10 +25,10 @@ I changed file name standalone.xml on standalone-std.xml and I changed file name
 Your way may be different. 
 
 ### Use CLI to configure the server:
-Start server first.
 ```sh
 jboss-cli.sh -c --controller=127.0.0.1:9990 --user=admin --password=[YOUR ADMIN PASS] --file=configure-server.cli
 ```
+> Start server first.
 
 ### System properties
 **poc-chat-glassfish-host**: host definition where GlassFish is \
