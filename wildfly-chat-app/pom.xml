@@ -107,7 +107,7 @@
         <dependency>
             <groupId>org.wildfly.security</groupId>
             <artifactId>wildfly-elytron</artifactId>
-            <version>1.11.2.Final</version>
+            <version>1.15.5.Final</version>
             <scope>compile</scope>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.picketbox/jboss-security-spi -->
